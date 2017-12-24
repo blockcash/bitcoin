@@ -9,21 +9,22 @@ BITCOINCLI=${BITCOINCLI:-$SRCDIR/blockcash-cli}
 BITCOINTX=${BITCOINTX:-$SRCDIR/blockcash-tx}
 BITCOINQT=${BITCOINQT:-$SRCDIR/qt/blockcash-qt}
 
-[ ! -x $BLOCKCASHD ] && echo "$BLOCKCASHD not found or not executable." && exit 1
+[ ! -x $BITCOIND ] && echo "$LITECOIND not found or not executable." && exit 1
 
 # The autodetected version git tag can screw up manpage output a little bit
-BTCVER=($($BLOCKCASHCLI --version | head -n1 | awk -F'[ -]' '{ print $6, $7 }'))
+BTCVER=($($LITECOINCLI --version | head -n1 | awk -F'[ -]' '{ print $6, $7 }'))
 
 # Create a footer file with copyright content.
-# This gets autodetected fine for blockcashd if --version-string is not set,
-# but has different outcomes for blockcash-qt and blockcash-cli.
+# This gets autodetected fine for bitcoind if --version-string is not set,
+# but has different outcomes for bitcoin-qt and bitcoin-cli.
 echo "[COPYRIGHT]" > footer.h2m
-$BLOCKCASHD --version | sed -n '1!p' >> footer.h2m
+$BITCOIND --version | sed -n '1!p' >> footer.h2m
 
-for cmd in $BLOCKCASHD $BLOCKCASHCLI $BLOCKCASHTX $BLOCKCASHDQT; do
+for cmd in $BITCOIND $BITCOINCLI $BITCOINTX $BITCOINQT; do
   cmdname="${cmd##*/}"
   help2man -N --version-string=${BTCVER[0]} --include=footer.h2m -o ${MANDIR}/${cmdname}.1 ${cmd}
   sed -i "s/\\\-${BTCVER[1]}//g" ${MANDIR}/${cmdname}.1
 done
+
 
 rm -f footer.h2m
