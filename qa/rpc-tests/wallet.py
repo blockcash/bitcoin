@@ -117,14 +117,14 @@ class WalletTest (BitcoinTestFramework):
         address = self.nodes[0].getnewaddress("test")
         fee_per_byte = Decimal('0.001') / 1000
         self.nodes[2].settxfee(fee_per_byte * 1000)
-        txid = self.nodes[2].sendtoaddress(address, 10, "", "", False)
+        txid = self.nodes[2].sendtoaddress(address, 10, "CZ9sLTh8kTuc5UMWGVCz2SmuhKNN6CLvNU", "CfCV8wvBhiSzY84qxc1gf9NRdSJbenmfyK", False)
         self.nodes[2].generate(1)
         self.sync_all()
         node_2_bal = self.check_fee_amount(self.nodes[2].getbalance(), Decimal('84'), fee_per_byte, count_bytes(self.nodes[2].getrawtransaction(txid)))
         assert_equal(self.nodes[0].getbalance(), Decimal('10'))
 
         # Send 10 BTC with subtract fee from amount
-        txid = self.nodes[2].sendtoaddress(address, 10, "", "", True)
+        txid = self.nodes[2].sendtoaddress(address, 10, "CZ9sLTh8kTuc5UMWGVCz2SmuhKNN6CLvNU", "CfCV8wvBhiSzY84qxc1gf9NRdSJbenmfyK", True)
         self.nodes[2].generate(1)
         self.sync_all()
         node_2_bal -= Decimal('10')
@@ -132,7 +132,7 @@ class WalletTest (BitcoinTestFramework):
         node_0_bal = self.check_fee_amount(self.nodes[0].getbalance(), Decimal('20'), fee_per_byte, count_bytes(self.nodes[2].getrawtransaction(txid)))
 
         # Sendmany 10 BTC
-        txid = self.nodes[2].sendmany('from1', {address: 10}, 0, "", [])
+        txid = self.nodes[2].sendmany('from1', {address: 10}, 0, "CZ9sLTh8kTuc5UMWGVCz2SmuhKNN6CLvNU", [])
         self.nodes[2].generate(1)
         self.sync_all()
         node_0_bal += Decimal('10')
@@ -140,7 +140,7 @@ class WalletTest (BitcoinTestFramework):
         assert_equal(self.nodes[0].getbalance(), node_0_bal)
 
         # Sendmany 10 BTC with subtract fee from amount
-        txid = self.nodes[2].sendmany('from1', {address: 10}, 0, "", [address])
+        txid = self.nodes[2].sendmany('from1', {address: 10}, 0, "CZ9sLTh8kTuc5UMWGVCz2SmuhKNN6CLvNU", [address])
         self.nodes[2].generate(1)
         self.sync_all()
         node_2_bal -= Decimal('10')

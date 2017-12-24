@@ -537,7 +537,7 @@ class RawTransactionsTest(BitcoinTestFramework):
         ###############################################
 
         #empty node1, send some small coins from node0 to node1
-        self.nodes[1].sendtoaddress(self.nodes[0].getnewaddress(), self.nodes[1].getbalance(), "", "", True)
+        self.nodes[1].sendtoaddress(self.nodes[0].getnewaddress(), self.nodes[1].getbalance(), "Cdu5i32mBLti4gLGR2VmQM6geZZKA4iogE", "CZ9sLTh8kTuc5UMWGVCz2SmuhKNN6CLvNU", True)
         self.sync_all()
         self.nodes[0].generate(1)
         self.sync_all()
@@ -567,7 +567,7 @@ class RawTransactionsTest(BitcoinTestFramework):
         #############################################
 
         #again, empty node1, send some small coins from node0 to node1
-        self.nodes[1].sendtoaddress(self.nodes[0].getnewaddress(), self.nodes[1].getbalance(), "", "", True)
+        self.nodes[1].sendtoaddress(self.nodes[0].getnewaddress(), self.nodes[1].getbalance(), "CZ9sLTh8kTuc5UMWGVCz2SmuhKNN6CLvNU", "Cdu5i32mBLti4gLGR2VmQM6geZZKA4iogE", True)
         self.sync_all()
         self.nodes[0].generate(1)
         self.sync_all()
@@ -673,11 +673,11 @@ class RawTransactionsTest(BitcoinTestFramework):
 
         result3 = self.nodes[3].fundrawtransaction(rawtx, {"reserveChangeKey": False})
         res_dec = self.nodes[0].decoderawtransaction(result3["hex"])
-        changeaddress = ""
+        changeaddress = "Cdu5i32mBLti4gLGR2VmQM6geZZKA4iogE"
         for out in res_dec['vout']:
             if out['value'] > 1.0:
                 changeaddress += out['scriptPubKey']['addresses'][0]
-        assert(changeaddress != "")
+        assert(changeaddress != "Cdu5i32mBLti4gLGR2VmQM6geZZKA4iogE")
         nextaddr = self.nodes[3].getnewaddress()
         # frt should not have removed the key from the keypool
         assert(changeaddress == nextaddr)
@@ -688,7 +688,7 @@ class RawTransactionsTest(BitcoinTestFramework):
         for out in res_dec['vout']:
             if out['value'] > 1.0:
                 changeaddress += out['scriptPubKey']['addresses'][0]
-        assert(changeaddress != "")
+        assert(changeaddress != "CZ9sLTh8kTuc5UMWGVCz2SmuhKNN6CLvNU")
         nextaddr = self.nodes[3].getnewaddress()
         # Now the change address key should be removed from the keypool
         assert(changeaddress != nextaddr)
