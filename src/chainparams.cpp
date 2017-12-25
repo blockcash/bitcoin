@@ -142,12 +142,7 @@ public:
         fRequireStandard = true;
         fMineBlocksOnDemand = false;
 
-        checkpointData = (CCheckpointData) {
-            {
-                {  500, uint256S("0x841a2965955dd288cfa707a755d05a54e45f8bd476835ec9af4402a2b59a2967")},
-                
-        };
-
+        
         chainTxData = ChainTxData{
             // Data as of block db42d00d824950a125f9b08b6b6c282c484781562fa8b3bd29d6ce4a2627c348 (height 1259851).
             1513325938, // * UNIX timestamp of last known number of transactions
