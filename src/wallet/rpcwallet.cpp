@@ -17,6 +17,7 @@
 #include "policy/policy.h"
 #include "policy/rbf.h"
 #include "rpc/mining.h"
+#include "rpc/safemode.h"
 #include "rpc/server.h"
 #include "script/sign.h"
 #include "timedata.h"
@@ -26,6 +27,9 @@
 #include "wallet/feebumper.h"
 #include "wallet/wallet.h"
 #include "wallet/walletdb.h"
+#include "wallet/walletutil.h"
+
+#include <init.h>  // For StartShutdown
 
 #include <stdint.h>
 
